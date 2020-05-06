@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
 // if (process.env.type == "production") {
 // let   URI =
@@ -8,8 +8,9 @@ var mongoose = require('mongoose');
 // }
 // localhost:3000/
 
-   LocalURI = "mongodb+srv://Muhammad:Muhammad@cluster0-oset3.mongodb.net/test?retryWrites=true&w=majority";
+LocalURI =
+  "mongodb+srv://Muhammad:Muhammad@cluster0-oset3.mongodb.net/test?retryWrites=true&w=majority";
 mongoose.connect(LocalURI, { useNewUrlParser: true }, (err, data) => {
-  console.log(err || data);
+  // console.log(err || data);
   console.log("mongodb connected");
 });
