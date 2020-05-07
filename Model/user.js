@@ -41,14 +41,14 @@ let UserSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  isEmailConfirmed: {
-    type: Boolean,
-    default: false,
-  },
   isConfirmedByAdmin: {
     type: Boolean,
     default: false,
   },
+  // isEmailConfirmed: {
+  //   type: Boolean,
+  //   default: false,
+  // },
 });
 
 module.exports = mongoose.model("user", UserSchema);

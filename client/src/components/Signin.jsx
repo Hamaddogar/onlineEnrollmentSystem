@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import { useHistory, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import jwtDecode from "jwt-decode";
 import Avatar from "@material-ui/core/Avatar";
-import Link from "@material-ui/core/Link";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -9,6 +12,8 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+
+import { SET_USER } from "../store/types";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,10 +46,39 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  links: {
+    textDecorationStyle: "none",
+  },
 }));
 
 function Signin() {
+  const [error, setError] = useState("");
+
   const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const signupData = {
+      email: e.target.email.value,
+      password: e.target.password.value,
+    };
+
+    axios
+      .post("/signin", signupData)
+      .then((res) => {
+        if (res.data.success) {
+          const decoded = jwtDecode(res.data.data);
+          dispatch({ type: SET_USER, payload: decoded.user });
+          history.push("/");
+        } else {
+          setError(res.data.data);
+        }
+      })
+      .catch((err) => console.log("SIGNINERR", err));
+  }
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -58,7 +92,7 @@ function Signin() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -69,6 +103,8 @@ function Signin() {
               name="email"
               autoComplete="email"
               autoFocus
+              error={error ? true : false}
+              helperText={error}
             />
             <TextField
               variant="outlined"
@@ -93,7 +129,7 @@ function Signin() {
             <Grid container>
               <Grid item xs />
               <Grid item>
-                <Link to="/signup" variant="body2">
+                <Link to="/signup" className={classes.links}>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

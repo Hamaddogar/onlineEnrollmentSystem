@@ -4,15 +4,15 @@ const router = express.Router();
 var User = require("../Model/user");
 
 router.post("/signup", function (req, res) {
-  User.findOne({ userEmail: req.body.userEmail })
+  User.findOne({ email: req.body.email })
     .then((user) => {
       if (user) {
         return res.json({ success: false, data: "User already exist" });
       } else {
         let userSignup = new User({
-          userName: req.body.userName,
-          userEmail: req.body.userEmail,
-          userPassword: req.body.userPassword,
+          name: req.body.name,
+          email: req.body.email,
+          password: req.body.password,
         });
 
         userSignup.save((err, user) => {

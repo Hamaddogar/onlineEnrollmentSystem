@@ -9,7 +9,7 @@ var mongoose = require("mongoose");
 // localhost:3000/
 
 LocalURI =
-  "mongodb+srv://Muhammad:Muhammad@cluster0-oset3.mongodb.net/test?retryWrites=true&w=majority";
+  "mongodb+srv://Muhammad:Muhammad@cluster0-oset3.mongodb.net/onlineenrollmentsystem?retryWrites=true&w=majority";
 mongoose.connect(LocalURI, { useNewUrlParser: true }, (err, data) => {
   // console.log(err || data);
   console.log("mongodb connected");
