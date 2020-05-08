@@ -13,7 +13,7 @@ let checkToken = (req, res, next) => {
           message: "Token is not valid",
         });
       } else {
-        req.decoded = decoded;
+        req.user = decoded;
         next();
       }
     });

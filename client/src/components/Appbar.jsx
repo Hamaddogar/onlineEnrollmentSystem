@@ -27,21 +27,24 @@ const useStyles = makeStyles((theme) => ({
 
 function Appbar() {
   const classes = useStyles();
-  const user = useSelector((state) => state.user);
-  console.log(user);
-
+  const state = useSelector((state) => state);
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar>
+      <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             Online Enrollment System
           </Typography>
-          {user.isAuthenticated ? (
+          {state.isAuthenticated ? (
             <>
-              <Link to="/signin" className={classes.links}>
-                Add Course
+              {state.user.isAdmin && (
+                <Link to="/add-course" className={classes.links}>
+                  Add Course
+                </Link>
+              )}
+              <Link to="/join-course" className={classes.links}>
+                Join Course
               </Link>
             </>
           ) : (

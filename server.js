@@ -1,9 +1,11 @@
 var express = require("express");
-var dbconfiq = require("./db/dbconfig");
+require("./db/dbconfig");
 var bodyParser = require("body-parser");
-let signupUser = require("./api/signup");
-let loginUser = require("./api/login");
-let middleware = require("./db/middleware");
+var signupUser = require("./api/signup");
+var loginUser = require("./api/login");
+var course = require("./api/course");
+var middleware = require("./db/middleware");
+var path = require("path");
 
 var app = express();
 var cors = require("cors");
@@ -14,6 +16,8 @@ app.use(bodyParser.json());
 
 app.use(signupUser);
 app.use(loginUser);
+app.use(course);
+app.use("/uploads", express.static(path.join(__dirname, "public/assets")));
 
 app.get("/", middleware.checkToken, function (req, res) {
   res.status(200).send("Hello world");

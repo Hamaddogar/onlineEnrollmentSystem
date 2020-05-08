@@ -13,11 +13,12 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { SET_USER } from "../store/types";
+import setAuthToken from "../utils/setAuthToken";
+import { SET_USER, SET_COURSE } from "../store/types";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "100vh",
+    height: "calc(100vh - 64px)",
   },
   image: {
     backgroundImage: "url(https://source.unsplash.com/random)",
@@ -67,17 +68,24 @@ function Signin() {
     };
 
     axios
-      .post("/signin", signupData)
+      .get("/get-courses")
       .then((res) => {
-        if (res.data.success) {
-          const decoded = jwtDecode(res.data.data);
-          dispatch({ type: SET_USER, payload: decoded.user });
-          history.push("/");
-        } else {
-          setError(res.data.data);
-        }
+        dispatch({ type: SET_COURSE, payload: res.data.data });
+        axios
+          .post("/signin", signupData)
+          .then((res) => {
+            if (res.data.success) {
+              setAuthToken(res.data.data);
+              const decoded = jwtDecode(res.data.data);
+              dispatch({ type: SET_USER, payload: decoded.user });
+              history.push("/");
+            } else {
+              setError(res.data.data);
+            }
+          })
+          .catch((err) => console.log("SIGNINERR", err));
       })
-      .catch((err) => console.log("SIGNINERR", err));
+      .catch((err) => console.log("GETCOURSESERR", err));
   }
 
   return (
