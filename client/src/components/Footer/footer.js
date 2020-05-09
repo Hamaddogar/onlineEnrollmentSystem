@@ -35,7 +35,10 @@ import '../Footer/style.css'
           <a href="#"><li>web Mobile cloud Native computing</li></a>
           <a href="#"><li>Python</li></a>
           <a href="#"><li>Block Chain</li></a>
-          <a href="#"><li>Tot</li></a>
+          <a href="#"><li>iot</li></a>
+          <a href="#"><li>Gaming</li></a>
+          <a href="#"><li>Blogging</li></a>
+          <a href="#"><li>Freelancing</li></a>
         </ul>
     </div>
 

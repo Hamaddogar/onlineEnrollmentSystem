@@ -14,9 +14,10 @@ import EditCourse from "./components/EditCourse";
 function App() {
   return (
     <BrowserRouter>
-      <Appbar />
-      <Allscreen/>
+    <Appbar/>
       <Switch>
+      <Route  exact path="/" component={Allscreen} />
+
         <Route path="/signup" component={Signup} />
         <Route path="/signin" component={Signin} />
         <PrivateRoute path="/dashboard" component={Dashboard} />

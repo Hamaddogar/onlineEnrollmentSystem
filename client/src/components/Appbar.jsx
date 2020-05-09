@@ -53,6 +53,9 @@ function Appbar() {
             </>
           ) : (
             <>
+            <Link to="/" className={classes.links}>
+            Home
+              </Link>
               <Link to="/signin" className={classes.links}>
                 Sign In
               </Link>
