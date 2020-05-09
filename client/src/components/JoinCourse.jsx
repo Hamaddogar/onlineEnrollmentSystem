@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import axios from "axios";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,6 +11,10 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import MenuItem from "@material-ui/core/MenuItem";
+import Alert from "@material-ui/lab/Alert";
+import Collapse from "@material-ui/core/Collapse";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,12 +43,38 @@ function JoinCourse() {
   const [course, setCourse] = useState("");
   const [wayToLearn, setWayToLearn] = useState("");
   const [additional, setAdditional] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const classes = useStyles(additional);
   const state = useSelector((state) => state);
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    const joinCourseData = {
+      name: e.target.name.value,
+      email: e.target.email.value,
+      courseId: course,
+      cnic: e.target.cnic.value,
+      address: e.target.address.value,
+      learnway: wayToLearn,
+      fatherName: additional ? e.target.fname.value : "",
+      oldAcademyName: additional ? e.target.oldAcademyName.value : "",
+      oldAcadmyAddress: additional ? e.target.oldAcadmyAddress.value : "",
+      oldAcademyEmail: additional ? e.target.oldAcademyEmail.value : "",
+    };
+
+    axios
+      .post("/join-course", joinCourseData)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.success) {
+          return setOpen(true);
+        } else {
+          return alert("something wrong plz try agian later");
+        }
+      })
+      .catch((err) => console.log("JOINCOURSEERR", err));
   }
 
   return (
@@ -56,6 +87,26 @@ function JoinCourse() {
         <Typography component="h1" variant="h5">
           Join Course
         </Typography>
+        <Collapse in={open} style={{ width: "100%" }}>
+          <Alert
+            variant="filled"
+            severity="success"
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => {
+                  setOpen(false);
+                }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+          >
+            You have joined the course
+          </Alert>
+        </Collapse>
         <form
           className={classes.form}
           onSubmit={handleSubmit}
@@ -98,7 +149,7 @@ function JoinCourse() {
                 onChange={(e) => setCourse(e.target.value)}
               >
                 {state.courses.map((option) => (
-                  <MenuItem key={option._id} value={option.title}>
+                  <MenuItem key={option._id} value={option._id}>
                     {option.title}
                   </MenuItem>
                 ))}
@@ -162,28 +213,28 @@ function JoinCourse() {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    name="academyName"
+                    name="oldAcademyName"
                     variant="outlined"
                     fullWidth
-                    id="academyName"
+                    id="oldAcademyName"
                     label="Old Academy Name"
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    name="acadmyAddress"
+                    name="oldAcadmyAddress"
                     variant="outlined"
                     fullWidth
-                    id="acadmyAddress"
+                    id="oldAcadmyAddress"
                     label="Old Acadmy Address"
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    name="academyEmail"
+                    name="oldAcademyEmail"
                     variant="outlined"
                     fullWidth
-                    id="academyEmail"
+                    id="oldAcademyEmail"
                     label="Old Academy Email"
                   />
                 </Grid>

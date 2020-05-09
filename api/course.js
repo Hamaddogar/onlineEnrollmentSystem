@@ -2,6 +2,7 @@ var express = require("express");
 var multer = require("multer");
 
 var middleware = require("../db/middleware");
+var User = require("../Model/user");
 var Course = require("../Model/course");
 
 var router = express.Router();
@@ -43,5 +44,36 @@ router.post(
     });
   }
 );
+
+router.post("/join-course", middleware.checkToken, function (req, res) {
+  User.findById(req.user.user._id, function (err, doc) {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({ success: false, data: err });
+    }
+    doc.name = req.body.name;
+    doc.email = req.body.email;
+    doc.cnic = req.body.cnic;
+    doc.address = req.body.address;
+    doc.learnway = req.body.learnway;
+    doc.fatherName = req.body.fatherName;
+    doc.oldAcademyName = req.body.oldAcademyName;
+    doc.oldAcadmyAddress = req.body.oldAcadmyAddress;
+    doc.oldAcademyEmail = req.body.oldAcademyEmail;
+    doc.save().then(() => {
+      Course.updateOne(
+        { _id: req.body.courseId },
+        { $push: { users: req.user.user._id } },
+        function (err, doc) {
+          if (err) {
+            console.log(err);
+            return res.status(500).json({ success: false, data: err });
+          }
+          res.status(200).json({ success: true, data: "Successfull joined" });
+        }
+      );
+    });
+  });
+});
 
 module.exports = router;

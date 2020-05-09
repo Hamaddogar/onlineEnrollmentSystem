@@ -7,6 +7,7 @@ import Appbar from "./components/Appbar";
 import AddCource from "./components/AddCourse";
 import JoinCource from "./components/JoinCourse";
 import PrivateRoute from "./components/PrivateRoute";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Switch>
         <Route path="/signup" component={Signup} />
         <Route path="/signin" component={Signin} />
+        <PrivateRoute path="/dashboard" component={Dashboard} />
         <PrivateRoute path="/add-course" component={AddCource} />
         <PrivateRoute path="/join-course" component={JoinCource} />
       </Switch>

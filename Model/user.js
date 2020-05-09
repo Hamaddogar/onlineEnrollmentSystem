@@ -1,42 +1,17 @@
 const mongoose = require("mongoose");
 
 const UserSchema = mongoose.Schema({
-  name: {
-    type: String,
-  },
-  email: {
-    type: String,
-  },
-  password: {
-    type: String,
-  },
-  time: {
-    type: String,
-  },
-  course: {
-    type: String,
-  },
-  cnic: {
-    type: Number,
-  },
-  phone: {
-    type: Number,
-  },
-  address: {
-    type: String,
-  },
-  learnway: {
-    type: String,
-  },
-  academyName: {
-    type: String,
-  },
-  acadmyAddress: {
-    type: String,
-  },
-  academyEmail: {
-    type: String,
-  },
+  name: String,
+  email: String,
+  password: String,
+  cnic: String,
+  phone: String,
+  address: String,
+  learnway: String,
+  fatherName: String,
+  oldAcademyName: String,
+  oldAcadmyAddress: String,
+  oldAcademyEmail: String,
   isAdmin: {
     type: Boolean,
     default: false,

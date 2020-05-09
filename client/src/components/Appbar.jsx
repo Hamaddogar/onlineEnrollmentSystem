@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   links: {
     color: "white",
-    textDecorationStyle: "none",
+    textDecoration: "none",
     padding: "0 1em",
     margin: "0 0.2em",
   },
@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 function Appbar() {
   const classes = useStyles();
   const state = useSelector((state) => state);
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -38,14 +39,17 @@ function Appbar() {
           </Typography>
           {state.isAuthenticated ? (
             <>
+              <Link to="/dashboard" className={classes.links}>
+                Dashboard
+              </Link>
+              <Link to="/join-course" className={classes.links}>
+                Join Course
+              </Link>
               {state.user.isAdmin && (
                 <Link to="/add-course" className={classes.links}>
                   Add Course
                 </Link>
               )}
-              <Link to="/join-course" className={classes.links}>
-                Join Course
-              </Link>
             </>
           ) : (
             <>

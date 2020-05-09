@@ -9,6 +9,10 @@ import Add from "@material-ui/icons/Add";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Alert from "@material-ui/lab/Alert";
+import Collapse from "@material-ui/core/Collapse";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
 
 function AddCourse() {
   const [file, setfile] = useState(null);
+  const [open, setOpen] = useState(false);
+
   const classes = useStyles();
 
   function handleSubmit(e) {
@@ -47,7 +53,13 @@ function AddCourse() {
 
     axios
       .post("/add-course", data)
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        if (res.data.success) {
+          return setOpen(true);
+        } else {
+          return alert("something went wrong try again later");
+        }
+      })
       .catch((err) => console.log("ADDCOURSERR", err));
   }
 
@@ -61,6 +73,26 @@ function AddCourse() {
         <Typography component="h1" variant="h5">
           Add Course
         </Typography>
+        <Collapse in={open} style={{ width: "100%" }}>
+          <Alert
+            variant="filled"
+            severity="success"
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => {
+                  setOpen(false);
+                }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+          >
+            You have joined the course
+          </Alert>
+        </Collapse>
         <form
           className={classes.form}
           onSubmit={handleSubmit}
