@@ -8,6 +8,7 @@ import AddCource from "./components/AddCourse";
 import JoinCource from "./components/JoinCourse";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./components/Dashboard";
+import EditCourse from "./components/EditCourse";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <PrivateRoute path="/dashboard" component={Dashboard} />
         <PrivateRoute path="/add-course" component={AddCource} />
         <PrivateRoute path="/join-course" component={JoinCource} />
+        <PrivateRoute path="/edit-course/:courseId" component={EditCourse} />
       </Switch>
     </BrowserRouter>
   );

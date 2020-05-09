@@ -76,4 +76,38 @@ router.post("/join-course", middleware.checkToken, function (req, res) {
   });
 });
 
+router.post("/course-delete", middleware.checkToken, function (req, res) {
+  Course.findByIdAndRemove(req.body.courseId)
+    .then(() => res.status(200).json({ success: true }))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ success: false, data: err });
+    });
+});
+
+router.post(
+  "/edit-course",
+  middleware.checkToken,
+  upload.single("courseimg"),
+  function (req, res) {
+    console.log(req.body, req.file);
+    Course.findById(req.body.courseId, function (err, doc) {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ success: false, data: err });
+      }
+      doc.title = req.body.title;
+      doc.description = req.body.description;
+      doc.courseimg = req.file.filename;
+      doc
+        .save()
+        .then(() => res.status(200).json({ success: true }))
+        .catch((err) => {
+          console.log(err);
+          res.status(500).json({ success: false, data: err });
+        });
+    });
+  }
+);
+
 module.exports = router;
