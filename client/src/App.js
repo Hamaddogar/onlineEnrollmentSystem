@@ -9,11 +9,13 @@ import JoinCource from "./components/JoinCourse";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./components/Dashboard";
 import EditCourse from "./components/EditCourse";
+ import Allscreen  from '../src/components/Home/allhome';
 
 function App() {
   return (
     <BrowserRouter>
       <Appbar />
+      <Allscreen/>
       <Switch>
         <Route path="/signup" component={Signup} />
         <Route path="/signin" component={Signin} />
