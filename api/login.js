@@ -7,6 +7,7 @@ var User = require("../Model/user");
 var config = require("../db/jwtkey");
 
 async function sendMail(email) {
+   console.log(email)
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
 
@@ -16,14 +17,14 @@ async function sendMail(email) {
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: "shopmatechallenge@gmail.com", // generated ethereal user
-      pass: "12345hamad", // generated ethereal password
+      user: "muhammadhamaddogar@gmail.com", // generated ethereal user
+      pass: "muhammadhamaddogar234", // generated ethereal password
     },
   });
 
   // send mail with defined transport object
   await transporter.sendMail({
-    from: '"Fred Foo 👻" <foo@example.com>', // sender address
+    from: '"onlineEnrollmentSystem 👻" <foo@example.com>', // sender address
     to: email, // list of receivers
     subject: "Hello ✔", // Subject line
     text: "Confirm", // plain text body

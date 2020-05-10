@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
+   const [confirm,setConfirm]=useState(false)
 
   const classes = useStyles();
   const state = useSelector((state) => state);
@@ -69,6 +70,8 @@ const Dashboard = () => {
   function handleUserConfirm(userId) {
     axios.get(`/confirm-user?userId=${userId}`).then((res) => {
       if (res.data.success) {
+
+         setConfirm({confirm:res.data.success})
         alert("Confirmed");
       } else {
         alert("Something Wrong");
@@ -177,7 +180,7 @@ const Dashboard = () => {
                           disabled={user.isConfirmedByAdmin}
                           onClick={() => handleUserConfirm(user._id)}
                         >
-                          {user.isConfirmedByAdmin ? "Confirmed" : "Confirm"}
+                          {confirm ==true? "Confirmed" : "Confirm"}
                         </Button>
                       </Grid>
                     </Grid>
