@@ -9,31 +9,26 @@ var config = require("../db/jwtkey");
 async function sendMail(email) {
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
-  let testAccount = await nodemailer.createTestAccount();
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
+    host: "smtp.gmail.com",
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: testAccount.user, // generated ethereal user
-      pass: testAccount.pass, // generated ethereal password
+      user: "shopmatechallenge@gmail.com", // generated ethereal user
+      pass: "12345hamad", // generated ethereal password
     },
   });
 
   // send mail with defined transport object
-  let info = await transporter.sendMail({
+  await transporter.sendMail({
     from: '"Fred Foo 👻" <foo@example.com>', // sender address
     to: email, // list of receivers
     subject: "Hello ✔", // Subject line
     text: "Confirm", // plain text body
     html: "<h4>Your Account has been approved</h4>", // html body
   });
-
-  // Preview only available when sending through an Ethereal account
-  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
 
 router.post("/signin", function (req, res) {
