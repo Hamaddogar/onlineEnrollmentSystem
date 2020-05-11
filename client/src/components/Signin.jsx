@@ -75,6 +75,7 @@ function Signin() {
           .post("/signin", signupData)
           .then((res) => {
             if (res.data.success) {
+                localStorage.setItem("loginuser",JSON.stringify(res.data))
               setAuthToken(res.data.data);
               const decoded = jwtDecode(res.data.data);
               dispatch({ type: SET_USER, payload: decoded.user });

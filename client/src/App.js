@@ -16,7 +16,11 @@ function App() {
     <BrowserRouter>
     <Appbar/>
       <Switch>
+
+         
+      <Route  exact path="/Home" component={Allscreen} />
       <Route  exact path="/" component={Allscreen} />
+
 
         <Route path="/signup" component={Signup} />
         <Route path="/signin" component={Signin} />
