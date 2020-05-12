@@ -16,6 +16,7 @@ import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -34,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+   menuItemcolor:{
+ color:"black"
+   },
   additionalBtn: (prop) => ({
     margin: prop ? theme.spacing(1, 0, 1, 1) : theme.spacing(1, 0, 0, 1),
   }),
@@ -142,6 +146,7 @@ function JoinCourse() {
                 id="course"
                 select
                 label="Select Course"
+                color="black"
                 required
                 fullWidth
                 variant="outlined"
@@ -149,8 +154,8 @@ function JoinCourse() {
                 onChange={(e) => setCourse(e.target.value)}
               >
                 {state.courses.map((option) => (
-                  <MenuItem key={option._id} value={option._id}>
-                    {option.title}
+                  <MenuItem className={classes.menuItemcolor} key={option._id} value={option._id}>
+                  {option.title}
                   </MenuItem>
                 ))}
               </TextField>
@@ -184,13 +189,14 @@ function JoinCourse() {
                 fullWidth
                 variant="outlined"
                 value={wayToLearn}
-                onChange={(e) => setWayToLearn(e.target.value)}
+                onChange={(e) => setWayToLearn(
+                   e.target.value)}
               >
-                <MenuItem value="One To One Session">
+                <MenuItem   className={classes.menuItemcolor} value="One To One Session">
                   One To One Session
                 </MenuItem>
-                <MenuItem value="Video Session">Video Session</MenuItem>
-                <MenuItem value="Class Session">Class Session</MenuItem>
+                <MenuItem  className={classes.menuItemcolor}  color="black" value="Video Session">Video Session</MenuItem>
+                <MenuItem  className={classes.menuItemcolor} value="Class Session">Class Session</MenuItem>
               </TextField>
             </Grid>
             <Button
